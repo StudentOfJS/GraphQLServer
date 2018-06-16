@@ -62,6 +62,15 @@ export const EDIT_EMPLOYEE = gql`
   }
 `
 
+export const REMOVE_EMPLOYEE = gql`
+  mutation removeEmployee($id: String!){
+    removeEmployee(id: $id){
+      path
+      message
+    }
+  }
+`
+
 export const CREATE_USER = gql`
   mutation signupWithoutConfirmation(
     $email:String!,
