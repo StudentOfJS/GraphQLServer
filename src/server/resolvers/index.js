@@ -263,12 +263,9 @@ export default {
       return createError('survey', `Survey not found`)
     },
     removeSurvey: async (_, { surveyName, companyName }, { models: { Survey } }) => {
-      try {
-        await Survey.findOneAndRemove({ surveyName, companyName }).exec()
-        return null
-      } catch (error) {
-        return createError('survey', `Survey not found`)
-      }
+      const existed = await Survey.findOneAndRemove({ surveyName, companyName }).exec()
+      if (existed) { return null }
+      return createError('survey', `Survey not found`)
     },
     createResult: async (_, args, { models: { Result } }) => {
       try {
