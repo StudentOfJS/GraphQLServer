@@ -230,3 +230,12 @@ export const CREATE_RESULT = gql`
     }
   }
 `
+
+export const PASSWORD_RESET = gql`
+  mutation passwordReset($resetId: String!, $password:String!){
+    passwordReset(resetId: $resetId, password:$password){
+      path
+      message
+    }
+  }
+`
