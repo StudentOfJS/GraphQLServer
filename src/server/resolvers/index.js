@@ -268,16 +268,13 @@ export default {
       return createError('survey', `Survey not found`)
     },
     createResult: async (_, args, { models: { Result } }) => {
-      try {
-        const date = Date.now()
-        await new Result({ date, ...args }).save()
-        return null
-      } catch (error) {
-        return createError(
-          'result',
-          `Cannot submit survey, check answers and try again`
-        )
-      }
+      const date = Date.now()
+      const submitted = await new Result({ date, ...args }).save()
+      if (submitted) { return null }
+      return createError(
+        'result',
+        `Cannot submit survey, check answers and try again`
+      )
     },
     passwordReset: async (_, { resetId, password }, { models: { User } }) => {
       try {

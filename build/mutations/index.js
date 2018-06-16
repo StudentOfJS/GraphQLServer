@@ -193,3 +193,40 @@ export const REMOVE_SURVEY = gql`
     }
   }
 `
+
+export const CREATE_RESULT = gql`
+  mutation createResult(
+    $email: String,
+    $mobile: String,
+    $participant: String,
+    $manager: String,
+    $group: String,
+    $companyName: String,
+    $surveyName: String,
+    $p1: Int,
+    $p2: Int,
+    $p3: Int,
+    $p4: Int,
+    $p5: Int,
+    $p6: Int,
+  ){
+    createResult(
+    email: $email,
+    mobile: $mobile,
+    participant: $participant,
+    manager: $manager,
+    group: $group,
+    companyName: $companyName,
+    surveyName: $surveyName,
+    p1: $p1,
+    p2: $p2,
+    p3: $p3,
+    p4: $p4,
+    p5: $p5,
+    p6: $p6
+    ){
+      path
+      message
+    }
+  }
+`
