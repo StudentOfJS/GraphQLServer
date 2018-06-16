@@ -240,17 +240,11 @@ export default {
       )
     },
     removeEmployee: async (_, { id }, { models: { Employee, User } }) => {
-      try {
-        await Employee.findByIdAndRemove(id).exec()
-      } catch (error) {
-        return createError('employee', `employee not found`)
-      }
-      try {
-        await User.findByIdAndRemove(id).exec()
-        return null
-      } catch (error) {
-        return createError('employee', `employee not registered user`)
-      }
+      const employeeExists = await Employee.findByIdAndRemove(id).exec()
+      if (!employeeExists) { return createError('employee', `employee not found`) }
+      const userExists = await User.findByIdAndRemove(id).exec()
+      if (!userExists) { return createError('employee', `employee removed, wasn't registered user`) }
+      return null
     },
     createSurvey: async (_, args, { models: { Survey } }) => {
       const exists = await Survey.findOne({
