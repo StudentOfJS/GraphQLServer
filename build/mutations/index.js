@@ -71,3 +71,12 @@ export const LOGIN_USER = gql`
     }
   }
 `
+
+export const CREATE_COMPANY = gql`
+  mutation createCompany($companyName: String!, $groups: [String]){
+    createCompany(companyName: $companyName, groups:$groups){
+      path
+      message
+    }
+  }
+`

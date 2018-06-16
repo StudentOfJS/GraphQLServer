@@ -51,6 +51,7 @@ export default {
     },
     getLoggedIn: async (_, __, { session, models: { Employee } }) => {
       // checks session for logged in user
+      console.log(session)
       if (session && session.userId) {
         const loggedInUser = await Employee.findById(session.userId).exec()
         if (loggedInUser) { return { loggedInUser } }
@@ -171,7 +172,6 @@ export default {
         // add user id to session
         session.userId = user._id
         await session.save()
-
         // find employee details
         try {
           const employee = await Employee.findOne({ email }).exec()
