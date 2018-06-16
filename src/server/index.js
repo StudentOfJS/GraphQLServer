@@ -12,7 +12,7 @@ import MongoStore from 'connect-mongo'
 import { Employee, Survey, Company, Result, User } from './models'
 import resolvers from './resolvers'
 import typeDefs from './schema'
-const { NODE_ENV } = process.env
+const { NODE_ENV, MONGO_URI } = process.env
 
 
 const MongoDBStoreWithSession = MongoStore(session)
@@ -22,7 +22,7 @@ const options = {
   reconnectInterval: 500, // Reconnect every 500ms
 }
 mongoose.connect(
-  'mongodb://rod:fucking5@ds119059.mlab.com:19059/fuckit',
+  MONGO_URI,
   options
 )
 mongoose.connection
