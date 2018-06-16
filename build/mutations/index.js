@@ -30,3 +30,17 @@ export const CREATE_EMPLOYEE = gql`
   }
 }
 `
+
+export const CREATE_USER = gql`
+  mutation signupWithoutConfirmation(
+    $email:String!,
+    $password: String!
+  ){
+    signupWithoutConfirmation(
+      email: $email,
+      password: $password){
+      path
+      message
+    }
+  }
+`
