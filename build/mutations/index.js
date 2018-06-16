@@ -80,3 +80,12 @@ export const CREATE_COMPANY = gql`
     }
   }
 `
+
+export const REMOVE_COMPANY = gql`
+  mutation removeCompany($companyName: String!, $groups: [String]){
+    removeCompany(companyName: $companyName, groups:$groups){
+      path
+      message
+    }
+  }
+`
