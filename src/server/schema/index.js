@@ -7,12 +7,12 @@ export default gql`
   }
 
   type Pages {
-    p1: String
-    p2: String
-    p3: String
-    p4: String
-    p5: String
-    p6: String
+    p1: String!
+    p2: String!
+    p3: String!
+    p4: String!
+    p5: String!
+    p6: String!
   }
 
   type LoggedInUser {
@@ -95,12 +95,12 @@ export default gql`
   }
 
   input PagesInput {
-    p1: String
-    p2: String
-    p3: String
-    p4: String
-    p5: String
-    p6: String
+    p1: String!
+    p2: String!
+    p3: String!
+    p4: String!
+    p5: String!
+    p6: String!
   }
 
   type Query {

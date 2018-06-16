@@ -247,17 +247,15 @@ export default {
       return null
     },
     createSurvey: async (_, args, { models: { Survey } }) => {
+      console.log("running")
       const exists = await Survey.findOne({
         surveyName: args.surveyName,
         companyName: args.companyName
-      })
+      }).exec()
       if (exists) { return createError('survey', 'survey already exists') }
-      try {
-        await new Survey(args).save()
-        return null
-      } catch (error) {
-        return createError('survey', 'check survey fields')
-      }
+      const added = await new Survey({ ...args }).save()
+      if (added) { return null }
+      return createError('survey', 'check survey fields')
     },
     editSurvey: async (_, args, { models: { Survey } }) => {
       const query = { surveyName: args.surveyName, companyName: args.companyName }

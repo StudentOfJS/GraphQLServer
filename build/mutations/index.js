@@ -129,3 +129,27 @@ export const REMOVE_COMPANY = gql`
     }
   }
 `
+export const CREATE_SURVEY = gql`
+  mutation createSurvey(
+    $surveyName: String!,
+    $companyName: String!,
+    $introPage1: String!,
+    $introPage2: String!,
+    $subHeading: PagesInput!,
+    $start: PagesInput!,
+    $end: PagesInput!
+  ){
+    createSurvey(
+      surveyName: $surveyName,
+      companyName: $companyName,
+      subHeading:$subHeading,
+      introPage1: $introPage1,
+      introPage2: $introPage2,
+      start: $start,
+      end:$end
+    ){
+      path
+      message
+    }
+  }
+`
