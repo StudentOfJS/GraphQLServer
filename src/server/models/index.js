@@ -100,7 +100,7 @@ export const Result = mongoose.model('Results', {
   group: String,
   companyName: String,
   surveyName: String,
-  date: Date,
+  date: Number,
   p1: Number,
   p2: Number,
   p3: Number,

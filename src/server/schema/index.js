@@ -80,7 +80,7 @@ export default gql`
     group: String
     companyName: String
     surveyName: String
-    date: String
+    date: Int
     p1: Int
     p2: Int
     p3: Int

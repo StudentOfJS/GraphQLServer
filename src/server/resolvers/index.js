@@ -268,7 +268,7 @@ export default {
       return createError('survey', `Survey not found`)
     },
     createResult: async (_, args, { models: { Result } }) => {
-      const date = Date.now()
+      const date = new Date().getTime()
       const submitted = await new Result({ date, ...args }).save()
       if (submitted) { return null }
       return createError(
