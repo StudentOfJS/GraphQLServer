@@ -258,12 +258,9 @@ export default {
     },
     editSurvey: async (_, args, { models: { Survey } }) => {
       const query = { surveyName: args.surveyName, companyName: args.companyName }
-      try {
-        await Survey.findOneAndUpdate(query, args).exec()
-        return null
-      } catch (error) {
-        return createError('survey', `Survey not found`)
-      }
+      const exists = await Survey.findOneAndUpdate(query, { ...args }).exec()
+      if (exists) { return null }
+      return createError('survey', `Survey not found`)
     },
     removeSurvey: async (_, { surveyName, companyName }, { models: { Survey } }) => {
       try {
