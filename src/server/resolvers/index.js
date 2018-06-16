@@ -291,17 +291,14 @@ export default {
     },
     forgotPassword: async (_, { email }, { models: { User }, url }) => {
       const resetId = uuid.v4()
-      try {
-        User.findOneAndUpdate(
-          { email },
-          {
-            resetId,
-            forgotPasswordLocked: true
-          }
-        ).exec()
-      } catch (error) {
-        return createError('email', 'email not found')
-      }
+      const updated = await User.findOneAndUpdate(
+        { email },
+        {
+          resetId,
+          forgotPasswordLocked: true
+        }
+      ).exec()
+      if (!updated) { return createError('email', 'email not found') }
       try {
         await sendEmail({ email, url, resetId })
         return null
