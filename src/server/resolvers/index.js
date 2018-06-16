@@ -81,26 +81,23 @@ export default {
       } catch (error) {
         return formatYupError(error)
       }
+      const exists = await User.findOne({ email }).exec()
+      if (exists) { return createError('email', 'user already exists') }
       try {
-        await User.findOne({ email }).exec()
-        return createError('email', 'user already exists')
+        const employee = await Employee.findOne({ email }).exec()
+        await new User({
+          _id: employee._id,
+          resetId: '',
+          confirmed: true,
+          forgotPasswordLocked: false,
+          email,
+          password
+        }).save()
       } catch (error) {
-        try {
-          const employee = await Employee.findOne({ email }).exec()
-          await new User({
-            _id: employee._id,
-            resetId: '',
-            confirmed: true,
-            forgotPasswordLocked: false,
-            email,
-            password
-          }).save()
-        } catch (error) {
-          return createError(
-            'employee',
-            'contact your administrator to arrange access'
-          )
-        }
+        return createError(
+          'employee',
+          'contact your administrator to arrange access'
+        )
       }
       return null
     },
