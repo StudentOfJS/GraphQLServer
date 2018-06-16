@@ -31,6 +31,37 @@ export const CREATE_EMPLOYEE = gql`
 }
 `
 
+export const EDIT_EMPLOYEE = gql`
+  mutation editEmployee(
+    $id: String!,
+    $surveyName:String,
+    $firstName: String,
+    $lastName: String,
+    $email:String,
+    $mobile: String,
+    $manager:String,
+    $groupMembership: [String],
+    $dashboardAccess:Boolean!,
+    $firstTime: Boolean
+  ){
+    editEmployee(
+      id: $id
+      surveyName:$surveyName,
+      firstName: $firstName,
+      lastName: $lastName,
+      email: $email,
+      mobile:$mobile,
+      manager:$manager,
+      groupMembership:$groupMembership,
+      dashboardAccess: $dashboardAccess,
+      firstTime: $firstTime
+    ){
+      path
+      message
+    }
+  }
+`
+
 export const CREATE_USER = gql`
   mutation signupWithoutConfirmation(
     $email:String!,
