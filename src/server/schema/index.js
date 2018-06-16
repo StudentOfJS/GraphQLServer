@@ -167,7 +167,6 @@ export default gql`
 
   editEmployee(
     id: String!
-    companyName: String!
     firstName: String
     lastName: String
     email: String
