@@ -6,7 +6,8 @@ export const sendEmail = async ({ email, url, resetId }) => {
   const newUrl = `${url}/change-password/${resetId}`
   const response = await client.transmissions.send({
     options: {
-      sandbox: true
+      sandbox: true,
+      endpoint: 'https://dev.sparkpost.com:443'
     },
     content: {
       from: 'testing@sparkpostbox.com',

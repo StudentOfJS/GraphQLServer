@@ -165,56 +165,56 @@ export default gql`
 
     removeEmployee(id: String!): [Error!]
 
-  editEmployee(
-    id: String!
-    firstName: String
-    lastName: String
-    email: String
-    mobile: String
-    manager: String
-    groupMembership: [String]
-    dashboardAccess: Boolean
-    surveyName: String
-    surveyOwed: Boolean
-    firstTime: Boolean
-  ): [Error!]
+    editEmployee(
+      id: String!
+      firstName: String
+      lastName: String
+      email: String
+      mobile: String
+      manager: String
+      groupMembership: [String]
+      dashboardAccess: Boolean
+      surveyName: String
+      surveyOwed: Boolean
+      firstTime: Boolean
+    ): [Error!]
 
-  createSurvey(
-    surveyName: String!
-    companyName: String!
-    introPage1: String!
-    introPage2: String!
-    subHeading: PagesInput
-    start: PagesInput
-    end: PagesInput
-  ) : [Error!]
+    createSurvey(
+      surveyName: String!
+      companyName: String!
+      introPage1: String!
+      introPage2: String!
+      subHeading: PagesInput
+      start: PagesInput
+      end: PagesInput
+    ) : [Error!]
 
-  editSurvey(
-    surveyName: String!
-    companyName: String!
-    introPage1: String
-    introPage2: String
-    subHeading: PagesInput
-    start: PagesInput
-    end: PagesInput
-  ) : [Error!]
+    editSurvey(
+      surveyName: String!
+      companyName: String!
+      introPage1: String
+      introPage2: String
+      subHeading: PagesInput
+      start: PagesInput
+      end: PagesInput
+    ) : [Error!]
 
-  removeSurvey(surveyName: String! companyName: String!) : [Error!]
+    removeSurvey(surveyName: String! companyName: String!) : [Error!]
 
-  createResult(
-    email: String
-    mobile: String
-    participant: String
-    manager: String
-    group: String
-    companyName: String
-    surveyName: String
-    p1: Int
-    p2: Int
-    p3: Int
-    p4: Int
-    p5: Int
-    p6: Int
-  ) : [Error!]
-}
+    createResult(
+      email: String
+      mobile: String
+      participant: String
+      manager: String
+      group: String
+      companyName: String
+      surveyName: String
+      p1: Int
+      p2: Int
+      p3: Int
+      p4: Int
+      p5: Int
+      p6: Int
+    ) : [Error!]
+  }
 `

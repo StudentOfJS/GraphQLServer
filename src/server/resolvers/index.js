@@ -301,12 +301,9 @@ export default {
         }
       ).exec()
       if (!updated) { return createError('email', 'email not found') }
-      try {
-        await sendEmail({ email, url, resetId })
-        return null
-      } catch (error) {
-        return createError('email', 'forgot password send email failed')
-      }
+      const sentEmail = await sendEmail({ email, url, resetId })
+      if (!sentEmail) { return createError('email', 'forgot password send email failed') }
+      return null
     }
   }
 }
