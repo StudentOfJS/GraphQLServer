@@ -277,10 +277,12 @@ export default {
       )
     },
     passwordReset: async (_, { resetId, password }, { models: { User } }) => {
+      const saltRounds = 10
+      const hashedPassword = await bcrypt.hashSync(password, saltRounds)
       const updated = await User.findOneAndUpdate(
         { resetId },
         {
-          password,
+          password: hashedPassword,
           forgotPasswordLocked: false,
           confirmed: true,
           resetId: ''
