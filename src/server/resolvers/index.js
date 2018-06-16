@@ -51,7 +51,6 @@ export default {
     },
     getLoggedIn: async (_, __, { session, models: { Employee } }) => {
       // checks session for logged in user
-      console.log(session)
       if (session && session.userId) {
         const loggedInUser = await Employee.findById(session.userId).exec()
         if (loggedInUser) { return { loggedInUser } }
@@ -233,15 +232,12 @@ export default {
       }
     },
     editEmployee: async (_, args, { models: { Employee } }) => {
-      try {
-        await Employee.findByIdAndUpdate(args.id, { ...args }).exec()
-        return null
-      } catch (error) {
-        return createError(
-          'employee',
-          `Cannot save changes to database due to ${error}`
-        )
-      }
+      const exists = await Employee.findByIdAndUpdate(args.id, { ...args }).exec()
+      if (exists) { return null }
+      return createError(
+        'employee',
+        `Employee not found`
+      )
     },
     removeEmployee: async (_, { id }, { models: { Employee, User } }) => {
       try {
