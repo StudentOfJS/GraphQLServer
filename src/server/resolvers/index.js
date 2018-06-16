@@ -214,12 +214,8 @@ export default {
       }
     },
     removeCompany: async (_, { companyName }, { models: { Company } }) => {
-      try {
-        await Company.findOneAndRemove({ companyName }).exec()
-        return null
-      } catch (error) {
-        return createError('company', 'company not found')
-      }
+      const exists = await Company.findOneAndRemove({ companyName }).exec()
+      return exists ? null : createError('company', 'company not found')
     },
     createEmployee: async (_, args, { models: { Employee } }) => {
       const exists = await Employee.findOne({ email: args.email }).exec()
