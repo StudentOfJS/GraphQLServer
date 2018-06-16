@@ -1,6 +1,6 @@
 import SparkPost from 'sparkpost'
-// const { SPARKPOST_API_KEY } = process.env
-const client = new SparkPost('62ce582cb13dbb94f978051aae4e6d66709366e7')
+const { SPARKPOST_API_KEY } = process.env
+const client = new SparkPost(SPARKPOST_API_KEY)
 
 export const sendEmail = async ({ email, url, resetId }) => {
   const newUrl = `${url}/change-password/${resetId}`
@@ -23,5 +23,5 @@ export const sendEmail = async ({ email, url, resetId }) => {
     },
     recipients: [{ address: email }]
   })
-  console.log(response)
+  return response
 }
