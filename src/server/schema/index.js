@@ -184,9 +184,9 @@ export default gql`
     companyName: String!
     introPage1: String!
     introPage2: String!
-    subHeading: PagesInput!
-    start: PagesInput!
-    end: PagesInput!
+    subHeading: PagesInput
+    start: PagesInput
+    end: PagesInput
   ) : [Error!]
 
   editSurvey(

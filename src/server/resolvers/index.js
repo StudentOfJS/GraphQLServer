@@ -247,7 +247,6 @@ export default {
       return null
     },
     createSurvey: async (_, args, { models: { Survey } }) => {
-      console.log("running")
       const exists = await Survey.findOne({
         surveyName: args.surveyName,
         companyName: args.companyName
