@@ -178,3 +178,18 @@ export const EDIT_SURVEY = gql`
     }
   }
 `
+
+export const REMOVE_SURVEY = gql`
+  mutation removeSurvey(
+    $surveyName: String!,
+    $companyName: String!
+  ){
+    removeSurvey(
+      surveyName: $surveyName,
+      companyName: $companyName
+    ){
+      path
+      message
+    }
+  }
+`
