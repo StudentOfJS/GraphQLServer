@@ -277,25 +277,17 @@ export default {
       )
     },
     passwordReset: async (_, { resetId, password }, { models: { User } }) => {
-      try {
-        await User.findOne({ resetId }).exec()
-      } catch (error) {
-        return createError('password', 'reset link expired')
-      }
-      try {
-        await User.findOneAndUpdate(
-          { resetId },
-          {
-            password,
-            forgotPasswordLocked: false,
-            confirmed: true,
-            resetId: ''
-          }
-        ).exec()
-        return null
-      } catch (error) {
-        return createError('password', 'email does not exist')
-      }
+      const updated = await User.findOneAndUpdate(
+        { resetId },
+        {
+          password,
+          forgotPasswordLocked: false,
+          confirmed: true,
+          resetId: ''
+        }
+      ).exec()
+      if (updated) { return null }
+      return createError('password', 'email does not exist')
     },
     forgotPassword: async (_, { email }, { models: { User }, url }) => {
       const resetId = uuid.v4()
