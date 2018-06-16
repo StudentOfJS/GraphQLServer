@@ -159,41 +159,41 @@ export const GET_LOGGED_IN = gql`
   }
 `
 
-const GET_RESULTS = gql`
-query getResults(
-  $companyName: String!,
-  $email: String,
-  $startDate: String,
-  $endDate: String,
-  $surveyName: String
-){
-  getResults(
-    companyName: $companyName,
-    email: $email,
-    startDate:$startDate,
-    endDate: $endDate,
-    surveyName:$surveyName
+export const GET_RESULTS = gql`
+  query getResults(
+    $companyName: String!,
+    $email: String,
+    $startDate: String,
+    $endDate: String,
+    $surveyName: String
   ){
-    results{
-      email
-      mobile
-      participant
-      manager
-      group
-      companyName
-      surveyName
-      date
-      p1
-      p2
-      p3
-      p4
-      p5
-      p6
-    }
-    errors{
-      path
-      message
+    getResults(
+      companyName: $companyName,
+      email: $email,
+      startDate:$startDate,
+      endDate: $endDate,
+      surveyName:$surveyName
+    ){
+      results{
+        email
+        mobile
+        participant
+        manager
+        group
+        companyName
+        surveyName
+        date
+        p1
+        p2
+        p3
+        p4
+        p5
+        p6
+      }
+      errors{
+        path
+        message
+      }
     }
   }
-}
 `
