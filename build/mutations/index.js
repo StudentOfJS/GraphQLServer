@@ -153,3 +153,28 @@ export const CREATE_SURVEY = gql`
     }
   }
 `
+
+export const EDIT_SURVEY = gql`
+  mutation editSurvey(
+    $surveyName: String!,
+    $companyName: String!,
+    $introPage1: String,
+    $introPage2: String,
+    $subHeading: PagesInput,
+    $start: PagesInput,
+    $end: PagesInput
+  ){
+    editSurvey(
+      surveyName: $surveyName,
+      companyName: $companyName,
+      subHeading:$subHeading,
+      introPage1: $introPage1,
+      introPage2: $introPage2,
+      start: $start,
+      end:$end
+    ){
+      path
+      message
+    }
+  }
+`
