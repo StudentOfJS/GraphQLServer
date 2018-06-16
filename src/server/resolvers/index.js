@@ -201,6 +201,8 @@ export default {
       return null
     },
     editCompany: async (_, { companyName, groups }, { models: { Company } }) => {
+      const exists = await Company.findOne({ companyName }).exec()
+      if (!exists) { return createError('company', `company doesn't exist`) }
       try {
         await Company.findOneAndUpdate(
           { companyName },
