@@ -1,5 +1,20 @@
 import gql from 'graphql-tag'
 
+export const UPLOAD_EMPLOYEES_FROM_CSV = gql`
+  mutation uploadEmployeesFromCsv(
+    $companyName: String!,
+    $file: Upload!
+  ){
+    uploadEmployeesFromCsv(
+      companyName: $companyName,
+      file: $file
+    ){
+      message
+      path
+    }
+  }
+`
+
 export const IMAGE_UPLOAD = gql`
   mutation imageUpload(
     $companyName: String!,
