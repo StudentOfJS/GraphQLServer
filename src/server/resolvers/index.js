@@ -10,8 +10,8 @@ import { GraphQLUpload } from '../schema/GraphQLUpload'
 export default {
   Upload: GraphQLUpload,
   Query: {
-    getImages: async (_, { companyName }, { models: { Image } }) => {
-      const images = await Image.find({ companyName }).exec()
+    getImages: async (_, { companyName }, { models: { File } }) => {
+      const images = await File.find({ companyName }).exec()
       if (images) {
         return images.map(image => ({ pathname: image.path }))
       }
@@ -74,16 +74,16 @@ export default {
     }
   },
   Mutation: {
-    imageUpload: async (_, { companyName, footer, logoLarge, logoSmall, file }, { models: { Image } }) => {
+    imageUpload: async (_, { companyName, footer, logoLarge, logoSmall, file }, { models: { File } }) => {
       const { stream, filename, mimetype, encoding } = await file
       const { path } = await storeFS({ stream, filename })
-      const exists = await Image.findOne({ companyName })
+      const exists = await File.findOne({ companyName })
       if (exists) {
-        const updated = await Image.findOneAndUpdate({ companyName, footer, logoLarge, logoSmall }, { filename, mimetype, encoding, path })
+        const updated = await File.findOneAndUpdate({ companyName, footer, logoLarge, logoSmall }, { filename, mimetype, encoding, path })
         if (!updated) { return createError('image', 'upload failed') }
         return null
       }
-      const newImage = await new Image({ companyName, footer, logoLarge, logoSmall, filename, mimetype, encoding, path }).save()
+      const newImage = await new File({ companyName, footer, logoLarge, logoSmall, filename, mimetype, encoding, path }).save()
       if (!newImage) { return createError('image', 'upload failed') }
       return null
     },
