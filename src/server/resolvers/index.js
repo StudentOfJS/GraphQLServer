@@ -3,16 +3,19 @@ import { userValidation, formatYupError } from '../auth/validation'
 import uuid from 'uuid'
 import createError from '../utils/createError'
 import { sendEmail } from '../auth/sendEmail'
-import promisesAll from 'promises-all'
-import { db, processUpload, GraphQLUpload } from '../utils/imageUpload'
+import { storeFS } from '../utils/imageUpload'
+import { GraphQLUpload } from '../schema/GraphQLUpload'
 
 
 export default {
   Upload: GraphQLUpload,
   Query: {
-    getImage: async (_, { filename }) => {
-      const image = await db.get('uploads').find({ filename }).value()
-      return image ? image : { errors: createError('image', 'image not found') }
+    getImages: async (_, { companyName }, { Image }) => {
+      const images = await Image.find({ companyName })
+      if (images) {
+        return images.map(image => ({ pathname: image.path }))
+      }
+      return { errors: createError('image', 'images not found') }
     },
     getCompanies: async (_, __, { models: { Company } }) => {
       const companies = await Company.find().exec()
@@ -71,7 +74,19 @@ export default {
     }
   },
   Mutation: {
-    imageUpload: async (_, { file }) => await processUpload(file),
+    imageUpload: async (_, { companyName, footer, logoLarge, logoSmall, file }, { Image }) => {
+      const { stream, filename, mimetype, encoding } = await file
+      const { path } = await storeFS({ stream, filename })
+      const exists = await Image.findOne({ companyName })
+      if (exists) {
+        const updated = await Image.findOneAndUpdate({ companyName, footer, logoLarge, logoSmall }, { filename, mimetype, encoding, path })
+        if (!updated) { return createError('image', 'upload failed') }
+        return null
+      }
+      const newImage = await new Image({ companyName, footer, logoLarge, logoSmall, filename, mimetype, encoding, path }).save()
+      if (!newImage) { return createError('image', 'upload failed') }
+      return null
+    },
     logout: async (_, { email }, { req }) => {
       if (email && req.sessionID) {
         await req.session.destroy()

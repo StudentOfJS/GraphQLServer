@@ -8,14 +8,24 @@ export default gql`
   }
   
   type File {
-    id: ID
-    path: String
-    filename: String
-    mimetype: String
-    encoding: String
-    errors: [Error]
+    companyName: String!
+    footer: Boolean
+    logoLarge: Boolean
+    logoSmall: Boolean
+    path: String!
+    filename: String!
+    mimetype: String!
+    encoding: String!
   }
   
+  type Image {
+    pathname: String
+  }
+
+  type Images {
+    images: [Image]
+    errors: [Error!]
+  }
 
   type Pages {
     p1: String!
@@ -115,8 +125,7 @@ export default gql`
   }
 
   type Query {
-
-    getImages(filename: String!) File!
+    getImages(companyName: String!) Images!
 
     getEmployees(companyName: String!): Employees
 
@@ -144,7 +153,13 @@ export default gql`
 
   type Mutation {
 
-    imageUpload(file: Upload!): File!
+    imageUpload(
+      companyName: String!
+      footer: Boolean
+      logoLarge: Boolean
+      logoSmall: Boolean
+      file: Upload!
+      ): [Error!]
 
     createCompany(companyName: String! groups: [String]) : [Error!]
 

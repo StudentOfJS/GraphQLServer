@@ -108,3 +108,14 @@ export const Result = mongoose.model('Results', {
   p5: Number,
   p6: Number
 })
+
+export const Image = mongoose.model('Image', {
+  companyName: String,
+  footer: Boolean,
+  logoLarge: Boolean,
+  logoSmall: Boolean,
+  path: String,
+  filename: String,
+  mimetype: String,
+  encoding: String,
+})
