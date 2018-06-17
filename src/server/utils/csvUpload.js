@@ -4,19 +4,19 @@ import mkdirp from 'mkdirp'
 
 const uploadDir = '../tmp'
 
-export const storeFSCSV = ({ stream, companyName }) => {
+export default ({ stream, companyName }) => {
   // Ensure upload directory exists
   mkdirp.sync(uploadDir)
-  const fileName = `${uploadDir}${companyName}.json`
-  fs.unlinkSync(fileName)
+  const filePath = `${uploadDir}${companyName}.json`
+  fs.unlinkSync(filePath)
   return new Promise((resolve, reject) =>
     stream
       .pipe(csv2json({
         // Defaults to comma.
         separator: ','
       }))
-      .pipe(fs.createWriteStream(fileName))
+      .pipe(fs.createWriteStream(filePath))
       .on('error', error => reject(error))
-      .on('finish', () => resolve({ fileName }))
+      .on('finish', () => resolve({ filePath }))
   )
 }

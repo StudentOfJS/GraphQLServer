@@ -142,9 +142,8 @@ export default gql`
 
   type Mutation {
 
-    uploadEmployeeFromCsv(
+    uploadEmployeesFromCsv(
       companyName: String!
-      csv: Boolean
       file: Upload!
     ) : [Error!]
 

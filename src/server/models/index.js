@@ -114,7 +114,6 @@ const FileSchema = new Schema({
   footer: Boolean,
   logoLarge: Boolean,
   logoSmall: Boolean,
-  csv: Boolean,
   path: String,
   filename: String,
   mimetype: String,

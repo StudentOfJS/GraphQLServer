@@ -1,3 +1,4 @@
+import assert from 'assert'
 import bcrypt from 'bcryptjs'
 import { userValidation, formatYupError } from '../auth/validation'
 import uuid from 'uuid'
@@ -5,6 +6,7 @@ import createError from '../utils/createError'
 import { sendEmail } from '../auth/sendEmail'
 import { storeFS } from '../utils/imageUpload'
 import { GraphQLUpload } from '../schema/GraphQLUpload'
+import csvUpload from '../utils/csvUpload'
 
 
 export default {
@@ -87,18 +89,17 @@ export default {
       if (!newImage) { return createError('image', 'upload failed') }
       return null
     },
-    uploadEmployeeFromCsv: async (_, { companyName, footer, logoLarge, logoSmall, file }, { models: { File } }) => {
-      const { stream, filename, mimetype, encoding } = await file
-      const { path } = await storeFS({ stream, filename })
-      const exists = await File.findOne({ companyName })
-      if (exists) {
-        const updated = await File.findOneAndUpdate({ companyName, footer, logoLarge, logoSmall }, { filename, mimetype, encoding, path })
-        if (!updated) { return createError('image', 'upload failed') }
+    uploadEmployeesFromCsv: async (_, { companyName, file }, { models: { Employee } }) => {
+      const { stream } = await file
+      try {
+        const { filePath } = await csvUpload({ stream, companyName })
+        const data = require(filePath)
+        const success = await Employee.insertMany(data, err => assert.equal(null, err)).exec()
+        if (!success) { return createError('csv', 'upload failed') }
         return null
+      } catch (error) {
+        return createError('csv', 'upload failed')
       }
-      const newImage = await new File({ companyName, footer, logoLarge, logoSmall, filename, mimetype, encoding, path }).save()
-      if (!newImage) { return createError('image', 'upload failed') }
-      return null
     },
     logout: async (_, { email }, { req }) => {
       if (email && req.sessionID) {
