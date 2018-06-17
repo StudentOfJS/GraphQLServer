@@ -1,5 +1,26 @@
 import gql from 'graphql-tag'
 
+export const IMAGE_UPLOAD = gql`
+  mutation imageUpload(
+    $companyName: String!,
+    $footer: Boolean,
+    $logoLarge: Boolean,
+    $logoSmall: Boolean,
+    $file: Upload!
+  ){
+    imageUpload(
+      companyName: $companyName,
+      footer: $footer,
+      logoLarge: $logoLarge,
+      logoSmall: $logoSmall,
+      file: $file
+    ){
+      message
+      path
+    }
+  }
+`
+
 export const CREATE_EMPLOYEE = gql`
   mutation createEmployee(
   $companyName: String!,
