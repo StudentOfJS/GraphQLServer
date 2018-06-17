@@ -9,7 +9,7 @@ import session from 'express-session'
 import uuid from 'uuid'
 import { redirectToHTTPS } from 'express-http-to-https'
 import MongoStore from 'connect-mongo'
-import { Employee, Survey, Company, Result, User, Image } from './models'
+import { Employee, Survey, Company, Result, User, File } from './models'
 import resolvers from './resolvers'
 import typeDefs from './schema'
 const { NODE_ENV, MONGO_URI } = process.env
@@ -81,7 +81,7 @@ const server = new ApolloServer({
         Company,
         Result,
         User,
-        Image
+        File
       },
       req,
       session: req.session,
