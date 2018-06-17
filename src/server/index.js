@@ -24,9 +24,10 @@ mongoose.connect(
   MONGO_URI,
   options
 )
+
 mongoose.connection
-  .once('open', () => console.log('Connected to MongoLab instance'))
-  .on('error', error => console.log('Error connecting to MongoLab:', error))
+  .once('open', () => console.log('Connected to MongoLab instance')) // eslint-disable-line no-console
+  .on('error', error => console.log('Error connecting to MongoLab:', error)) // eslint-disable-line no-console
 
 const store = new MongoDBStoreWithSession({
   mongooseConnection: mongoose.connection,
