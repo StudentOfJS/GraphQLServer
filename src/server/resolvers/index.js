@@ -11,7 +11,10 @@ import { db, processUpload } from '../utils/imageUpload'
 export default {
   Upload: GraphQLUpload,
   Query: {
-    uploads: () => db.get('uploads').value(),
+    uploads: async (_, { filename }) => {
+      const image = await db.get('uploads').find({ filename }).value()
+      return image ? image : { errors: createError('image', 'image not found') }
+    },
     getCompanies: async (_, __, { models: { Company } }) => {
       const companies = await Company.find().exec()
       return companies[0] !== null ? companies : { errors: createError('company', 'no companies found') }
@@ -69,8 +72,8 @@ export default {
     }
   },
   Mutation: {
-    singleUpload: (obj, { file }) => processUpload(file),
-    multipleUpload: async (obj, { files }) => {
+    singleUpload: async (_, { file }) => await processUpload(file),
+    multipleUpload: async (_, { files }) => {
       const { resolve, reject } = await promisesAll.all(
         files.map(processUpload)
       )
