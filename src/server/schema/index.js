@@ -8,11 +8,11 @@ export default gql`
   }
   
   type File {
-    id: ID!
-    path: String!
-    filename: String!
-    mimetype: String!
-    encoding: String!
+    id: ID
+    path: String
+    filename: String
+    mimetype: String
+    encoding: String
     errors: [Error]
   }
   
@@ -115,6 +115,8 @@ export default gql`
   }
 
   type Query {
+
+    getImages(filename: String!) File!
 
     getEmployees(companyName: String!): Employees
 
