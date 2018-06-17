@@ -3,8 +3,10 @@ import { userValidation, formatYupError } from '../auth/validation'
 import uuid from 'uuid'
 import createError from '../utils/createError'
 import { sendEmail } from '../auth/sendEmail'
+import { GraphQLUpload } from 'apollo-upload-server'
 
 export default {
+  Upload: GraphQLUpload,
   Query: {
     getCompanies: async (_, __, { models: { Company } }) => {
       const companies = await Company.find().exec()

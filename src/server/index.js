@@ -9,10 +9,12 @@ import session from 'express-session'
 import uuid from 'uuid'
 import { redirectToHTTPS } from 'express-http-to-https'
 import MongoStore from 'connect-mongo'
+import { apolloUploadExpress } from 'apollo-upload-server'
 import { Employee, Survey, Company, Result, User } from './models'
 import resolvers from './resolvers'
 import typeDefs from './schema'
 const { NODE_ENV, MONGO_URI } = process.env
+
 
 
 const MongoDBStoreWithSession = MongoStore(session)
@@ -35,8 +37,12 @@ const store = new MongoDBStoreWithSession({
 })
 
 const app = express()
+
 app.disable('x-powered-by')
-app.use(bodyParser.json())
+app.use(
+  bodyParser.json(),
+  apolloUploadExpress(/* Options */)
+)
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(
   cors({
