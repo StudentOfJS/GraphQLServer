@@ -26,6 +26,7 @@
     "compression": "^1.7.2",
     "connect-mongo": "^2.0.1",
     "cors": "^2.8.4",
+    "csv2json": "^1.4.2",
     "express": "^4.16.2",
     "express-http-to-https": "^1.1.4",
     "express-session": "^1.15.6",

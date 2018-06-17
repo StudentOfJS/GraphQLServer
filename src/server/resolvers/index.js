@@ -87,6 +87,19 @@ export default {
       if (!newImage) { return createError('image', 'upload failed') }
       return null
     },
+    uploadEmployeeFromCsv: async (_, { companyName, footer, logoLarge, logoSmall, file }, { models: { File } }) => {
+      const { stream, filename, mimetype, encoding } = await file
+      const { path } = await storeFS({ stream, filename })
+      const exists = await File.findOne({ companyName })
+      if (exists) {
+        const updated = await File.findOneAndUpdate({ companyName, footer, logoLarge, logoSmall }, { filename, mimetype, encoding, path })
+        if (!updated) { return createError('image', 'upload failed') }
+        return null
+      }
+      const newImage = await new File({ companyName, footer, logoLarge, logoSmall, filename, mimetype, encoding, path }).save()
+      if (!newImage) { return createError('image', 'upload failed') }
+      return null
+    },
     logout: async (_, { email }, { req }) => {
       if (email && req.sessionID) {
         await req.session.destroy()
