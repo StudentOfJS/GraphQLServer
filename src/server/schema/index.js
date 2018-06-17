@@ -11,6 +11,7 @@ export default gql`
     footer: Boolean
     logoLarge: Boolean
     logoSmall: Boolean
+    csv: Boolean
     path: String!
     filename: String!
     mimetype: String!
@@ -124,6 +125,7 @@ export default gql`
   }
 
   type Query {
+    
     getImages(companyName: String!): Images!
 
     getEmployees(companyName: String!): Employees
@@ -152,11 +154,11 @@ export default gql`
 
   type Mutation {
 
+    uploadEmployeeFromCsv() : [Error!]
+
     imageUpload(
       companyName: String!
-      footer: Boolean
-      logoLarge: Boolean
-      logoSmall: Boolean
+      csv: Boolean
       file: Upload!
       ): [Error!]
 

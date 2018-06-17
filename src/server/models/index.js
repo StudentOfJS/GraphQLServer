@@ -109,14 +109,15 @@ export const Result = mongoose.model('Results', {
   p6: Number
 })
 
-const ImageSchema = new Schema({
+const FileSchema = new Schema({
   companyName: String,
   footer: Boolean,
   logoLarge: Boolean,
   logoSmall: Boolean,
+  csv: Boolean,
   path: String,
   filename: String,
   mimetype: String,
   encoding: String,
 })
-export const Image = mongoose.model('Image', ImageSchema)
+export const Image = mongoose.model('File', FileSchema)
