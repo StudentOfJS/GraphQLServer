@@ -7,23 +7,11 @@ export default gql`
   }
   
   type File {
-    companyName: String!
-    footer: Boolean
-    logoLarge: Boolean
-    logoSmall: Boolean
-    csv: Boolean
-    path: String!
-    filename: String!
-    mimetype: String!
-    encoding: String!
-  }
-  
-  type ImageFile {
     pathname: String
   }
 
   type Images {
-    images: [ImageFile]
+    images: [File]
     errors: [Error!]
   }
 
