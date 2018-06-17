@@ -1,5 +1,19 @@
 import gql from 'graphql-tag'
 
+export const GET_IMAGES = gql`
+  query getImages($companyName: String!){
+    getImages(companyName:$companyName){
+      images{
+        pathname
+      }
+      errors{
+        path
+        message
+      }
+    }
+  }
+`
+
 export const GET_EMPLOYEE = gql`
   query getEmployee($id: String!) {
     getEmployee(id: $id){
