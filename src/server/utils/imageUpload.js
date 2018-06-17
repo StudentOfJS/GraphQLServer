@@ -4,6 +4,21 @@ import uuid from 'uuid'
 import mkdirp from 'mkdirp'
 import lowdb from 'lowdb'
 import FileSync from 'lowdb/adapters/FileSync'
+import { GraphQLScalarType } from 'graphql'
+
+export const GraphQLUpload = new GraphQLScalarType({
+  name: 'Upload',
+  description:
+    'The `Upload` scalar type represents a file upload promise that resolves ' +
+    'an object containing `stream`, `filename`, `mimetype` and `encoding`.',
+  parseValue: value => value,
+  parseLiteral() {
+    throw new Error('Upload scalar literal unsupported')
+  },
+  serialize() {
+    throw new Error('Upload scalar serialization unsupported')
+  }
+})
 
 const uploadDir = path.join(__dirname, '../public/images')
 // local json database

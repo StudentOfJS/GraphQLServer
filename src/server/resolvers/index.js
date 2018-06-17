@@ -3,9 +3,8 @@ import { userValidation, formatYupError } from '../auth/validation'
 import uuid from 'uuid'
 import createError from '../utils/createError'
 import { sendEmail } from '../auth/sendEmail'
-import { GraphQLUpload } from 'apollo-upload-server'
 import promisesAll from 'promises-all'
-import { db, processUpload } from '../utils/imageUpload'
+import { db, processUpload, GraphQLUpload } from '../utils/imageUpload'
 
 
 export default {
@@ -72,18 +71,7 @@ export default {
     }
   },
   Mutation: {
-    singleUpload: async (_, { file }) => await processUpload(file),
-    multipleUpload: async (_, { files }) => {
-      const { resolve, reject } = await promisesAll.all(
-        files.map(processUpload)
-      )
-      if (reject.length)
-        reject.forEach(({ name, message }) =>
-          // eslint-disable-next-line no-console
-          console.error(`${name}: ${message}`)
-        )
-      return resolve
-    },
+    imageUpload: async (_, { file }) => await processUpload(file),
     logout: async (_, { email }, { req }) => {
       if (email && req.sessionID) {
         await req.session.destroy()

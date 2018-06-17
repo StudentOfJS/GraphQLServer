@@ -1,4 +1,4 @@
-import { ApolloServer } from 'apollo-server'
+import { ApolloServer, makeExecutableSchema } from 'apollo-server'
 import express from 'express'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
@@ -41,7 +41,7 @@ const app = express()
 app.disable('x-powered-by')
 app.use(
   bodyParser.json(),
-  apolloUploadExpress(/* Options */)
+  apolloUploadExpress({ schema: makeExecutableSchema({ typeDefs, resolvers }) })
 )
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(
@@ -55,7 +55,7 @@ app.use(
 
 app.use(
   session({
-    genid: req => {
+    genid: () => {
       return uuid.v4()
     },
     secret: 'SESSION_SECRET',
