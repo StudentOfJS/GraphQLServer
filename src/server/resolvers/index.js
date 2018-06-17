@@ -4,10 +4,14 @@ import uuid from 'uuid'
 import createError from '../utils/createError'
 import { sendEmail } from '../auth/sendEmail'
 import { GraphQLUpload } from 'apollo-upload-server'
+import promisesAll from 'promises-all'
+import { db, processUpload } from '../utils/imageUpload'
+
 
 export default {
   Upload: GraphQLUpload,
   Query: {
+    uploads: () => db.get('uploads').value(),
     getCompanies: async (_, __, { models: { Company } }) => {
       const companies = await Company.find().exec()
       return companies[0] !== null ? companies : { errors: createError('company', 'no companies found') }
@@ -65,6 +69,18 @@ export default {
     }
   },
   Mutation: {
+    singleUpload: (obj, { file }) => processUpload(file),
+    multipleUpload: async (obj, { files }) => {
+      const { resolve, reject } = await promisesAll.all(
+        files.map(processUpload)
+      )
+      if (reject.length)
+        reject.forEach(({ name, message }) =>
+          // eslint-disable-next-line no-console
+          console.error(`${name}: ${message}`)
+        )
+      return resolve
+    },
     logout: async (_, { email }, { req }) => {
       if (email && req.sessionID) {
         await req.session.destroy()

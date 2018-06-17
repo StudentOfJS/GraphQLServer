@@ -38,6 +38,7 @@
     "mongoose": "^5.1.5",
     "morgan": "^1.9.0",
     "node-cron": "^1.2.1",
+    "promises-all": "^1.0.0",
     "pug": "^2.0.0-beta11",
     "rimraf": "^2.6.2",
     "serve-favicon": "^2.5.0",
