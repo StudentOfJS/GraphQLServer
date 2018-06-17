@@ -14,8 +14,6 @@ import resolvers from './resolvers'
 import typeDefs from './schema'
 const { NODE_ENV, MONGO_URI } = process.env
 
-
-
 const MongoDBStoreWithSession = MongoStore(session)
 mongoose.Promise = global.Promise
 const options = {

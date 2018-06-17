@@ -10,8 +10,8 @@ import { GraphQLUpload } from '../schema/GraphQLUpload'
 export default {
   Upload: GraphQLUpload,
   Query: {
-    getImages: async (_, { companyName }, { Image }) => {
-      const images = await Image.find({ companyName })
+    getImages: async (_, { companyName }, { models: { Image } }) => {
+      const images = await Image.find({ companyName }).exec()
       if (images) {
         return images.map(image => ({ pathname: image.path }))
       }
@@ -74,7 +74,7 @@ export default {
     }
   },
   Mutation: {
-    imageUpload: async (_, { companyName, footer, logoLarge, logoSmall, file }, { Image }) => {
+    imageUpload: async (_, { companyName, footer, logoLarge, logoSmall, file }, { models: { Image } }) => {
       const { stream, filename, mimetype, encoding } = await file
       const { path } = await storeFS({ stream, filename })
       const exists = await Image.findOne({ companyName })

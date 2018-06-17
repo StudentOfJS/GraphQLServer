@@ -1,6 +1,5 @@
 import { gql } from 'apollo-server'
 export default gql`
-  scalar Upload
 
   type Error {
     path: String!
@@ -18,12 +17,12 @@ export default gql`
     encoding: String!
   }
   
-  type Image {
+  type ImageFile {
     pathname: String
   }
 
   type Images {
-    images: [Image]
+    images: [ImageFile]
     errors: [Error!]
   }
 
@@ -125,7 +124,7 @@ export default gql`
   }
 
   type Query {
-    getImages(companyName: String!) Images!
+    getImages(companyName: String!): Images!
 
     getEmployees(companyName: String!): Employees
 

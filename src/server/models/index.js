@@ -109,7 +109,7 @@ export const Result = mongoose.model('Results', {
   p6: Number
 })
 
-export const Image = mongoose.model('Image', {
+const ImageSchema = new Schema({
   companyName: String,
   footer: Boolean,
   logoLarge: Boolean,
@@ -119,3 +119,4 @@ export const Image = mongoose.model('Image', {
   mimetype: String,
   encoding: String,
 })
+export const Image = mongoose.model('Image', ImageSchema)
