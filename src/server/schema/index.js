@@ -1,10 +1,21 @@
 import { gql } from 'apollo-server'
 export default gql`
   scalar Upload
+
   type Error {
     path: String!
     message: String!
   }
+  
+  type File {
+    id: ID!
+    path: String!
+    filename: String!
+    mimetype: String!
+    encoding: String!
+    errors: [Error]
+  }
+  
 
   type Pages {
     p1: String!

@@ -11,7 +11,7 @@ import { db, processUpload } from '../utils/imageUpload'
 export default {
   Upload: GraphQLUpload,
   Query: {
-    uploads: async (_, { filename }) => {
+    getImage: async (_, { filename }) => {
       const image = await db.get('uploads').find({ filename }).value()
       return image ? image : { errors: createError('image', 'image not found') }
     },
