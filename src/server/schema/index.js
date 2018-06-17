@@ -144,6 +144,10 @@ export default gql`
 
   type Mutation {
 
+    singleUpload(file: Upload!): File!
+    
+    multipleUpload(files: [Upload!]!): [File!]!
+
     createCompany(companyName: String! groups: [String]) : [Error!]
 
     editCompany(companyName: String! groups: [String]) : [Error!]
